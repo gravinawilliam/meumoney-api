@@ -7,6 +7,7 @@
   "license": "MIT",
   "devDependencies": {
     "@types/jest": "^26.0.23",
+    "git-commit-msg-linter": "^3.1.0",
     "jest": "^26.6.3",
     "ts-jest": "^26.5.6",
     "ts-node-dev": "^1.1.6",
