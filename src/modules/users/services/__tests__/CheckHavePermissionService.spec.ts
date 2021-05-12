@@ -50,4 +50,13 @@ describe('CheckHavePermission', () => {
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
+
+  it('should not be able for the user to have permission', async () => {
+    await expect(
+      checkHavePermission.execute({
+        userId: 'id invalid',
+        role: 'admin',
+      }),
+    ).rejects.toBeInstanceOf(AppError);
+  });
 });
