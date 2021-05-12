@@ -1,5 +1,6 @@
 import FakeUserRolesRepository from '@modules/users/fakes/FakeUserRolesRepository';
 import FakeUsersRepository from '@modules/users/fakes/FakeUsersRepository';
+import AppError from '@shared/errors/AppError';
 import CheckHavePermissionService from '../CheckHavePermissionService';
 
 let fakeUserRolesRepository: FakeUserRolesRepository;
@@ -30,5 +31,23 @@ describe('CheckHavePermission', () => {
       userId: user.id,
     });
     expect(havePermission).toHaveProperty('id');
+  });
+
+  it('should not be able for the user to have permission for a role that he does not have', async () => {
+    const user = await fakeUsersRepository.create({
+      email: 'william@example.com',
+      password: '123456789',
+      name: 'William',
+    });
+    await fakeUserRolesRepository.create({
+      role: 'admin',
+      userId: user.id,
+    });
+    await expect(
+      checkHavePermission.execute({
+        userId: user.id,
+        role: 'invalid role',
+      }),
+    ).rejects.toBeInstanceOf(AppError);
   });
 });
