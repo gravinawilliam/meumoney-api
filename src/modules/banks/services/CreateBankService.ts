@@ -1,8 +1,8 @@
 import { inject, injectable } from 'tsyringe';
-import Bank from '../infra/typeorm/entities/Bank';
 import AppError from '../../../shared/errors/AppError';
 import IBanksRepository from '../interfaces/repositories/IBanksRepository';
 import ICreateBankDTO from '../interfaces/dtos/ICreateBankDTO';
+import IBank from '../interfaces/models/IBank';
 
 @injectable()
 export default class CreateBankService {
@@ -16,7 +16,7 @@ export default class CreateBankService {
     blueColorCard,
     greenColorCard,
     redColorCard,
-  }: ICreateBankDTO): Promise<Bank> {
+  }: ICreateBankDTO): Promise<IBank> {
     const checkNameExists = await this.banksRepository.findByName(name);
     if (checkNameExists) {
       throw new AppError('O nome de banco já existe');
