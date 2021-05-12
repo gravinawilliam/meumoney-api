@@ -16,4 +16,6 @@ banksRouter.post(
   banksController.create,
 );
 
+banksRouter.get('/', banksController.index);
+
 export default banksRouter;
