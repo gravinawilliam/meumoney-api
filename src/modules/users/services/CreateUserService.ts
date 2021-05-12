@@ -28,6 +28,11 @@ export default class CreateUserService {
       throw new AppError('Email is not valid');
     }
 
+    const emailExists = await this.usersRepository.findByEmail(email);
+    if (emailExists) {
+      throw new AppError('A user with this email already exists.', 409);
+    }
+
     const hashedPassword = await this.hashProvider.generateHash(password);
     const user = await this.usersRepository.create({
       name,
