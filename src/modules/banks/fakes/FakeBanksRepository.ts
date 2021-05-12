@@ -16,6 +16,10 @@ export default class FakeBanksRepository implements IBanksRepository {
     return bankCreated;
   }
 
+  public async findAll(): Promise<IBank[]> {
+    return this.banks;
+  }
+
   public async findByName(name: string): Promise<IBank | undefined> {
     const foundBank = this.banks.find(bank => bank.name === name);
     return foundBank;
