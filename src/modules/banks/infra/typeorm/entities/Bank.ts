@@ -26,6 +26,7 @@ export default class Bank implements IBank {
     unique: true,
     nullable: true,
   })
+  @Exclude()
   logo: string;
 
   @Column({
