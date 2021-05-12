@@ -11,6 +11,7 @@
     "@types/jest": "^26.0.23",
     "@types/jsonwebtoken": "^8.5.1",
     "@types/node": "^15.0.2",
+    "@types/uuid": "^8.3.0",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",
     "eslint": "^7.16.0",
@@ -41,6 +42,7 @@
     "tsyringe": "^4.5.0",
     "typeorm": "^0.2.32",
     "typeorm-encrypted": "^0.5.6",
-    "typeorm-naming-strategies": "^2.0.0"
+    "typeorm-naming-strategies": "^2.0.0",
+    "uuid": "^8.3.2"
   }
 }
