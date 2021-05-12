@@ -6,6 +6,9 @@
   "author": "William Gravina <gravinawilliam@viwcode.com.br>",
   "license": "MIT",
   "devDependencies": {
+    "@types/jest": "^26.0.23",
+    "jest": "^26.6.3",
+    "ts-jest": "^26.5.6",
     "ts-node-dev": "^1.1.6",
     "tsconfig-paths": "^3.9.0",
     "typescript": "^3.9.8"
