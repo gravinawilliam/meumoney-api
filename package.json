@@ -28,6 +28,11 @@
   },
   "dependencies": {
     "express": "^4.17.1",
-    "express-async-errors": "^3.1.1"
+    "express-async-errors": "^3.1.1",
+    "pg": "^8.6.0",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.2.32",
+    "typeorm-encrypted": "^0.5.6",
+    "typeorm-naming-strategies": "^2.0.0"
   }
 }
