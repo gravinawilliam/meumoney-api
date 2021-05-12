@@ -3,12 +3,15 @@ import { inject, injectable } from 'tsyringe';
 import ICreateUserDTO from '@modules/users/interfaces/dtos/ICreateUserDTO';
 import IUser from '@modules/users/interfaces/models/IUser';
 import IUsersRepository from '@modules/users/interfaces/repositories/IUsersRepository';
+import IHashProvider from '@shared/container/providers/HashProvider/interfaces/IHashProvider';
 
 @injectable()
 export default class CreateUserService {
   constructor(
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
+    @inject('HashProvider')
+    private hashProvider: IHashProvider,
   ) {}
 
   public async execute({
@@ -16,10 +19,11 @@ export default class CreateUserService {
     password,
     name,
   }: ICreateUserDTO): Promise<IUser> {
+    const hashedPassword = await this.hashProvider.generateHash(password);
     const user = await this.usersRepository.create({
       name,
       email,
-      password,
+      password: hashedPassword,
     });
     return user;
   }
