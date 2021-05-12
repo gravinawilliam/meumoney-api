@@ -5,7 +5,7 @@ import CreateBankService from '../CreateBankService';
 let fakeBanksRepository: FakeBanksRepository;
 let createBank: CreateBankService;
 
-describe('AuthenticateUser', () => {
+describe('CreateBank', () => {
   beforeEach(() => {
     fakeBanksRepository = new FakeBanksRepository();
     createBank = new CreateBankService(fakeBanksRepository);
