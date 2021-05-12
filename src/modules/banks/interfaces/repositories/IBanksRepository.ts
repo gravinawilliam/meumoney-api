@@ -3,4 +3,5 @@ import IBank from '../models/IBank';
 
 export default interface IBanksRepository {
   create(bank: ICreateBankDTO): Promise<IBank>;
+  findByName(name: string): Promise<IBank | undefined>;
 }
