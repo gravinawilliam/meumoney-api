@@ -16,4 +16,13 @@ export default class UsersRepository implements IUsersRepository {
     await this.ormRepository.save(userCreated);
     return userCreated;
   }
+
+  public async findByEmail(email: string): Promise<IUser | undefined> {
+    const userFound = this.ormRepository.findOne({
+      where: {
+        email,
+      },
+    });
+    return userFound;
+  }
 }
