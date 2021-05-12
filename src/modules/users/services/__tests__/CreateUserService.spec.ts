@@ -49,4 +49,20 @@ describe('CreateUser', () => {
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
+
+  it('must not be able to create a new user with email is already registered in the database', async () => {
+    await fakeUsersRepository.create({
+      email: 'william@example.com',
+      password: '123456781',
+      name: 'William',
+    });
+
+    await expect(
+      createUser.execute({
+        email: 'william@example.com',
+        password: '123456789',
+        name: 'William2',
+      }),
+    ).rejects.toBeInstanceOf(AppError);
+  });
 });
