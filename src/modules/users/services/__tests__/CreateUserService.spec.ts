@@ -1,16 +1,24 @@
 import FakeUsersRepository from '@modules/users/fakes/FakeUsersRepository';
 import FakeHashProvider from '@shared/container/providers/HashProvider/fakes/FakeHashProvider';
+import FakeValidatorEmailProvider from '@shared/container/providers/ValidatorEmailProvider/fakes/FakeValidatorEmailProvider';
+import AppError from '@shared/errors/AppError';
 import CreateUserService from '../CreateUserService';
 
 let fakeUsersRepository: FakeUsersRepository;
 let fakeHashProvider: FakeHashProvider;
+let fakeValidatorEmailProvider: FakeValidatorEmailProvider;
 let createUser: CreateUserService;
 
 describe('CreateUser', () => {
   beforeEach(() => {
     fakeUsersRepository = new FakeUsersRepository();
     fakeHashProvider = new FakeHashProvider();
-    createUser = new CreateUserService(fakeUsersRepository, fakeHashProvider);
+    fakeValidatorEmailProvider = new FakeValidatorEmailProvider();
+    createUser = new CreateUserService(
+      fakeUsersRepository,
+      fakeHashProvider,
+      fakeValidatorEmailProvider,
+    );
   });
 
   it('should be able to create user', async () => {
@@ -30,5 +38,15 @@ describe('CreateUser', () => {
     });
     const hashedPassword = await fakeHashProvider.generateHash('123456789');
     expect(user.password).toBe(hashedPassword);
+  });
+
+  it('should not be able to create a new user with invalid email', async () => {
+    await expect(
+      createUser.execute({
+        email: 'invalid email',
+        password: '123456789',
+        name: 'William',
+      }),
+    ).rejects.toBeInstanceOf(AppError);
   });
 });
