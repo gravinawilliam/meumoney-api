@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 import { classToClass } from 'class-transformer';
 import CreateUserService from '@modules/users/services/CreateUserService';
+import { CREATED } from '@shared/constants/HttpStatusCode';
 
 export default class UsersController {
   public async create(req: Request, res: Response): Promise<Response> {
@@ -12,6 +13,6 @@ export default class UsersController {
       password,
       name,
     });
-    return res.status(201).json(classToClass(user));
+    return res.status(CREATED).json(classToClass(user));
   }
 }
