@@ -23,7 +23,15 @@ export default class CoinsRepository implements ICoinsRepository {
         name,
       },
     });
+    return foundCoin;
+  }
 
+  public async findBySymbol(symbol: string): Promise<ICoin | undefined> {
+    const foundCoin = await this.ormRepository.findOne({
+      where: {
+        symbol,
+      },
+    });
     return foundCoin;
   }
 }
