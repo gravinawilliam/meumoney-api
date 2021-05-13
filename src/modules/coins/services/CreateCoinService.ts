@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 import { inject, injectable } from 'tsyringe';
+import AppError from '@shared/errors/AppError';
 import ICoin from '../interfaces/models/ICoin';
 import ICreateCoinDTO from '../interfaces/dtos/ICreateCoinDTO';
 import ICoinsRepository from '../interfaces/repositories/ICoinsRepository';
@@ -12,6 +13,10 @@ export default class CreateCoinService {
   ) {}
 
   public async execute({ name, symbol }: ICreateCoinDTO): Promise<ICoin> {
+    const nameExists = await this.coinsRepository.findByName(name);
+    if (nameExists) {
+      throw new AppError('A coin with this name already exists.', 409);
+    }
     const coin = await this.coinsRepository.create({
       name,
       symbol,
