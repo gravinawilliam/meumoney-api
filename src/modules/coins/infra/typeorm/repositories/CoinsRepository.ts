@@ -16,4 +16,14 @@ export default class CoinsRepository implements ICoinsRepository {
     await this.ormRepository.save(coinCreated);
     return coinCreated;
   }
+
+  public async findByName(name: string): Promise<ICoin | undefined> {
+    const foundCoin = await this.ormRepository.findOne({
+      where: {
+        name,
+      },
+    });
+
+    return foundCoin;
+  }
 }
