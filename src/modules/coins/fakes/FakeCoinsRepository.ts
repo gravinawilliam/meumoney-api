@@ -20,4 +20,9 @@ export default class FakeCoinsRepository implements ICoinsRepository {
     const foundCoin = this.coins.find(coin => coin.name === name);
     return foundCoin;
   }
+
+  public async findBySymbol(symbol: string): Promise<ICoin | undefined> {
+    const foundCoin = this.coins.find(coin => coin.symbol === symbol);
+    return foundCoin;
+  }
 }
