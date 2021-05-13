@@ -17,6 +17,12 @@ export default class CreateCoinService {
     if (nameExists) {
       throw new AppError('A coin with this name already exists.', 409);
     }
+
+    const symbolExists = await this.coinsRepository.findBySymbol(symbol);
+    if (symbolExists) {
+      throw new AppError('A coin with this symbol already exists.', 409);
+    }
+
     const coin = await this.coinsRepository.create({
       name,
       symbol,
