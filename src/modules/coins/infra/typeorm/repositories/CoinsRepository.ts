@@ -38,7 +38,8 @@ export default class CoinsRepository implements ICoinsRepository {
     return foundCoin;
   }
 
-  public async save(coin: ICoin): Promise<void> {
+  public async save(coin: ICoin): Promise<ICoin> {
     await this.ormRepository.save(coin);
+    return coin;
   }
 }
