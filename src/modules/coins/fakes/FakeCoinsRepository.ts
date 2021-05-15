@@ -26,13 +26,17 @@ export default class FakeCoinsRepository implements ICoinsRepository {
     return foundCoin;
   }
 
+  public async findCoins(amountCoins: number): Promise<ICoin[]> {
+    const foundCoins = [];
+    for (let index = 0; index < amountCoins; index += 1) {
+      foundCoins.push(this.coins[index]);
+    }
+    return foundCoins;
+  }
+
   public async save(coin: ICoin): Promise<ICoin> {
     const findIndex = this.coins.findIndex(findCoin => findCoin.id === coin.id);
     this.coins[findIndex] = coin;
     return coin;
-  }
-
-  public async findNineCoins(): Promise<ICoin[]> {
-    return this.coins;
   }
 }
