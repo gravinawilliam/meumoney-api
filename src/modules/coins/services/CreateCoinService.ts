@@ -52,19 +52,9 @@ export default class CreateCoinService {
   public async execute(): Promise<boolean> {
     try {
       const coins = await axios.get('https://api.hgbrasil.com/finance');
-      const { USD, EUR, GBP, ARS, CAD, AUD, JPY, CNY, BTC } =
+      const { GBP, ARS, CAD, AUD, JPY, CNY, BTC, EUR, USD } =
         coins.data.results.currencies;
 
-      await saveCoin({
-        coin: USD,
-        coinsRepository: this.coinsRepository,
-        symbol: 'USD',
-      });
-      await saveCoin({
-        coin: EUR,
-        coinsRepository: this.coinsRepository,
-        symbol: 'EUR',
-      });
       await saveCoin({
         coin: GBP,
         coinsRepository: this.coinsRepository,
@@ -99,6 +89,16 @@ export default class CreateCoinService {
         coin: BTC,
         coinsRepository: this.coinsRepository,
         symbol: 'BTC',
+      });
+      await saveCoin({
+        coin: EUR,
+        coinsRepository: this.coinsRepository,
+        symbol: 'EUR',
+      });
+      await saveCoin({
+        coin: USD,
+        coinsRepository: this.coinsRepository,
+        symbol: 'USD',
       });
 
       return true;
