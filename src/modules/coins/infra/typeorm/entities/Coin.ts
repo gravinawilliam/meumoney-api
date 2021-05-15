@@ -27,6 +27,22 @@ export default class Coin implements ICoin {
   })
   symbol: string;
 
+  @Column({
+    type: 'decimal',
+    precision: 10,
+    scale: 2,
+    unique: true,
+  })
+  buy: number;
+
+  @Column({
+    type: 'decimal',
+    precision: 10,
+    scale: 2,
+    unique: true,
+  })
+  sell: number;
+
   @CreateDateColumn()
   @Exclude()
   createdAt: Date;

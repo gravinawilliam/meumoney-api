@@ -22,6 +22,9 @@ export default class CoinsRepository implements ICoinsRepository {
       where: {
         name,
       },
+      order: {
+        createdAt: `DESC`,
+      },
     });
     return foundCoin;
   }
@@ -33,5 +36,9 @@ export default class CoinsRepository implements ICoinsRepository {
       },
     });
     return foundCoin;
+  }
+
+  public async save(coin: ICoin): Promise<void> {
+    await this.ormRepository.save(coin);
   }
 }

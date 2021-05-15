@@ -25,4 +25,10 @@ export default class FakeCoinsRepository implements ICoinsRepository {
     const foundCoin = this.coins.find(coin => coin.symbol === symbol);
     return foundCoin;
   }
+
+  public async save(coin: ICoin): Promise<ICoin> {
+    const findIndex = this.coins.findIndex(findCoin => findCoin.id === coin.id);
+    this.coins[findIndex] = coin;
+    return coin;
+  }
 }
