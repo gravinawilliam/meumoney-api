@@ -31,4 +31,8 @@ export default class FakeCoinsRepository implements ICoinsRepository {
     this.coins[findIndex] = coin;
     return coin;
   }
+
+  public async findNineCoins(): Promise<ICoin[]> {
+    return this.coins;
+  }
 }
