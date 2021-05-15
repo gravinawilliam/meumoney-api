@@ -52,9 +52,11 @@
     "typescript": "^3.9.8"
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
     "celebrate": "^14.0.0",
     "class-transformer": "^0.4.0",
+    "date-fns": "^2.21.3",
     "dotenv": "^9.0.2",
     "email-validator": "^2.0.4",
     "express": "^4.17.1",
