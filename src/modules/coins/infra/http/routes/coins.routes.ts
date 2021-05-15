@@ -9,5 +9,6 @@ const coinsController = new CoinsController();
 coinsRouter.use(ensureAuthenticated);
 
 coinsRouter.post('/', grantPermission, coinsController.create);
+coinsRouter.get('/', coinsController.index);
 
 export default coinsRouter;
