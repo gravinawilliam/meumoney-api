@@ -3,6 +3,10 @@ import { inject, injectable } from 'tsyringe';
 import ICoin from '../interfaces/models/ICoin';
 import ICoinsRepository from '../interfaces/repositories/ICoinsRepository';
 
+interface IRequest {
+  amountCoins: number;
+}
+
 @injectable()
 export default class ListCoinsService {
   constructor(
@@ -10,8 +14,8 @@ export default class ListCoinsService {
     private coinsRepository: ICoinsRepository,
   ) {}
 
-  public async execute(): Promise<ICoin[]> {
-    const coins = await this.coinsRepository.findCoins(9);
+  public async execute({ amountCoins }: IRequest): Promise<ICoin[]> {
+    const coins = await this.coinsRepository.findCoins(amountCoins);
     return coins;
   }
 }
