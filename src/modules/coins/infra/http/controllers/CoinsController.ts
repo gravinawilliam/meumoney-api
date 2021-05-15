@@ -14,7 +14,9 @@ export default class CoinsController {
 
   public async index(req: Request, res: Response): Promise<Response> {
     const listCoins = container.resolve(ListCoinsService);
-    const httpResponse = await listCoins.execute();
+    const httpResponse = await listCoins.execute({
+      amountCoins: 9,
+    });
     return res.status(OK).json(classToClass(httpResponse));
   }
 }
