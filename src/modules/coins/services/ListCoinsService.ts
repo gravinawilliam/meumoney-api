@@ -4,7 +4,7 @@ import ICoin from '../interfaces/models/ICoin';
 import ICoinsRepository from '../interfaces/repositories/ICoinsRepository';
 
 @injectable()
-export default class CreateCoinService {
+export default class ListCoinsService {
   constructor(
     @inject('CoinsRepository')
     private coinsRepository: ICoinsRepository,
