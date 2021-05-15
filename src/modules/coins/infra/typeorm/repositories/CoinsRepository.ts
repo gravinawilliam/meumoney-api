@@ -11,16 +11,6 @@ export default class CoinsRepository implements ICoinsRepository {
     this.ormRepository = getRepository(Coin);
   }
 
-  public async findNineCoins(): Promise<ICoin[]> {
-    const foundCoin = await this.ormRepository.find({
-      order: {
-        createdAt: `DESC`,
-      },
-      take: 9,
-    });
-    return foundCoin;
-  }
-
   public async create(coin: ICreateCoinDTO): Promise<ICoin> {
     const coinCreated = this.ormRepository.create(coin);
     await this.ormRepository.save(coinCreated);
@@ -44,6 +34,16 @@ export default class CoinsRepository implements ICoinsRepository {
       where: {
         symbol,
       },
+    });
+    return foundCoin;
+  }
+
+  public async findCoins(amountCoins: number): Promise<ICoin[]> {
+    const foundCoin = await this.ormRepository.find({
+      order: {
+        createdAt: `DESC`,
+      },
+      take: amountCoins,
     });
     return foundCoin;
   }
