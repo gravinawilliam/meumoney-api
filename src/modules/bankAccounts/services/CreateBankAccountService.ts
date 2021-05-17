@@ -1,3 +1,6 @@
+import IUsersRepository from '@modules/users/interfaces/repositories/IUsersRepository';
+import { NOT_FOUND } from '@shared/constants/HttpStatusCode';
+import AppError from '@shared/errors/AppError';
 import { inject, injectable } from 'tsyringe';
 import ICreateBankAccountDTO from '../interfaces/dtos/ICreateBankAccountDTO';
 import IBankAccount from '../interfaces/models/IBankAccount';
@@ -8,6 +11,8 @@ export default class CreateBankAccountService {
   constructor(
     @inject('BankAccountsRepository')
     private bankAccountsRepository: IBankAccountsRepository,
+    @inject('UsersRepository')
+    private usersRepository: IUsersRepository,
   ) {}
 
   public async execute({
@@ -20,6 +25,12 @@ export default class CreateBankAccountService {
     symbolCoin,
     yearValidity,
   }: ICreateBankAccountDTO): Promise<IBankAccount> {
+    const user = await this.usersRepository.findById(userId);
+
+    if (!user) {
+      throw new AppError('User not found', NOT_FOUND);
+    }
+
     const bankAccount = await this.bankAccountsRepository.create({
       accountNumbers,
       balance,
