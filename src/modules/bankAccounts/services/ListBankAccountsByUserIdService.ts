@@ -1,5 +1,5 @@
 import { inject, injectable } from 'tsyringe';
-import ICreateBankAccountDTO from '../interfaces/dtos/ICreateBankAccountDTO';
+import IListBankAccountsByUserIdDTO from '../interfaces/dtos/IListBankAccountsByUserIdDTO';
 import IBankAccount from '../interfaces/models/IBankAccount';
 import IBankAccountsRepository from '../interfaces/repositories/IBankAccountsRepository';
 
@@ -12,7 +12,7 @@ export default class ListBankAccountsByUserIdService {
 
   public async execute({
     userId,
-  }: ICreateBankAccountDTO): Promise<IBankAccount[]> {
+  }: IListBankAccountsByUserIdDTO): Promise<IBankAccount[]> {
     const bankAccounts = await this.bankAccountsRepository.findByUserId(userId);
     return bankAccounts;
   }
