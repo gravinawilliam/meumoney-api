@@ -25,4 +25,9 @@ export default class UsersRepository implements IUsersRepository {
     });
     return userFound;
   }
+
+  public async findById(id: string): Promise<IUser | undefined> {
+    const userFound = this.ormRepository.findOne(id);
+    return userFound;
+  }
 }
