@@ -18,6 +18,7 @@ describe('CreateUser', () => {
     createBankAccount = new CreateBankAccountService(
       fakeBankAccountsRepository,
       fakeUsersRepository,
+      fakeBanksRepository,
     );
   });
 
@@ -61,6 +62,26 @@ describe('CreateUser', () => {
         cardholderName: 'William Gravina',
         monthValidity: 3,
         userId: 'invalid id',
+        yearValidity: 21,
+        symbolCoin: SymbolCoinEnum.USD,
+      }),
+    ).rejects.toBeInstanceOf(AppError);
+  });
+
+  it('you should not be able to create a new bank account with an invalid bank id', async () => {
+    const user = await fakeUsersRepository.create({
+      email: 'william@example.com',
+      name: 'William',
+      password: '123456789',
+    });
+    await expect(
+      createBankAccount.execute({
+        accountNumbers: '1323',
+        balance: 1456,
+        bankId: 'invalid id',
+        cardholderName: 'William Gravina',
+        monthValidity: 3,
+        userId: user.id,
         yearValidity: 21,
         symbolCoin: SymbolCoinEnum.USD,
       }),
