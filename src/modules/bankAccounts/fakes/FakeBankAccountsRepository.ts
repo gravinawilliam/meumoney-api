@@ -19,4 +19,11 @@ export default class FakeBankAccountsRepository
     this.bankAccounts.push(bankCreated);
     return bankCreated;
   }
+
+  public async findByUserId(userId: string): Promise<IBankAccount[]> {
+    const bankAccounts = this.bankAccounts.filter(bankAccount => {
+      return bankAccount.userId === userId;
+    });
+    return bankAccounts;
+  }
 }
