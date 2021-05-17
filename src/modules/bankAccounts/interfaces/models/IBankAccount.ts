@@ -1,5 +1,3 @@
-import SymbolCoinEnum from '../enums/SymbolCoinEnum';
-
 export default interface IBankAccount {
   readonly id: string;
   accountNumbers: string;
@@ -9,7 +7,7 @@ export default interface IBankAccount {
   yearValidity: number;
   userId: string;
   bankId: string;
-  symbolCoin: SymbolCoinEnum;
+  symbolCoin: string;
   createdAt: Date;
   updatedAt: Date;
 }

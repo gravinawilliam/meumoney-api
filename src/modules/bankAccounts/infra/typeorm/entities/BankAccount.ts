@@ -9,7 +9,6 @@ import {
 
 import { v4 } from 'uuid';
 import IBankAccount from '@modules/bankAccounts/interfaces/models/IBankAccount';
-import SymbolCoinEnum from '@modules/bankAccounts/interfaces/enums/SymbolCoinEnum';
 
 @Entity('bank_accounts')
 export default class BankAccount implements IBankAccount {
@@ -54,10 +53,9 @@ export default class BankAccount implements IBankAccount {
   bankId: string;
 
   @Column({
-    type: 'enum',
-    enum: SymbolCoinEnum,
+    type: 'varchar',
   })
-  symbolCoin: SymbolCoinEnum;
+  symbolCoin: string;
 
   @CreateDateColumn()
   @Exclude()

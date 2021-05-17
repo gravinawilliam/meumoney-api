@@ -1,5 +1,3 @@
-import SymbolCoinEnum from '../enums/SymbolCoinEnum';
-
 export default interface ICreateBankAccountDTO {
   accountNumbers: string;
   cardholderName: string;
@@ -8,5 +6,5 @@ export default interface ICreateBankAccountDTO {
   yearValidity: number;
   userId: string;
   bankId: string;
-  symbolCoin: SymbolCoinEnum;
+  symbolCoin: string;
 }
