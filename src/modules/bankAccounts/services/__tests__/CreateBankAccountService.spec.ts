@@ -9,7 +9,7 @@ let fakeBankAccountsRepository: FakeBankAccountsRepository;
 let fakeBanksRepository: FakeBanksRepository;
 let fakeUsersRepository: FakeUsersRepository;
 
-describe('CreateUser', () => {
+describe('CreateBankAccount', () => {
   beforeEach(() => {
     fakeBanksRepository = new FakeBanksRepository();
     fakeBankAccountsRepository = new FakeBankAccountsRepository();
