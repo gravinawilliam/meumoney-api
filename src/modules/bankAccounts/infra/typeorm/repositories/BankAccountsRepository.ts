@@ -18,4 +18,13 @@ export default class BankAccountsRepository implements IBankAccountsRepository {
     await this.ormRepository.save(bankAccountCreated);
     return bankAccountCreated;
   }
+
+  public async findByUserId(userId: string): Promise<IBankAccount[]> {
+    const bankAccounts = this.ormRepository.find({
+      where: {
+        userId,
+      },
+    });
+    return bankAccounts;
+  }
 }
