@@ -1,3 +1,4 @@
+import IBanksRepository from '@modules/banks/interfaces/repositories/IBanksRepository';
 import IUsersRepository from '@modules/users/interfaces/repositories/IUsersRepository';
 import { NOT_FOUND } from '@shared/constants/HttpStatusCode';
 import AppError from '@shared/errors/AppError';
@@ -13,6 +14,8 @@ export default class CreateBankAccountService {
     private bankAccountsRepository: IBankAccountsRepository,
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
+    @inject('BanksRepository')
+    private banksRepository: IBanksRepository,
   ) {}
 
   public async execute({
@@ -26,9 +29,13 @@ export default class CreateBankAccountService {
     yearValidity,
   }: ICreateBankAccountDTO): Promise<IBankAccount> {
     const user = await this.usersRepository.findById(userId);
-
     if (!user) {
       throw new AppError('User not found', NOT_FOUND);
+    }
+
+    const bank = await this.banksRepository.findById(bankId);
+    if (!bank) {
+      throw new AppError('Bank not found', NOT_FOUND);
     }
 
     const bankAccount = await this.bankAccountsRepository.create({
