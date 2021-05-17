@@ -56,6 +56,7 @@ export default class CreateBankAccounts1621113755997
               'BTC',
               'EUR',
               'USD',
+              'BRL',
             ],
           },
           {
