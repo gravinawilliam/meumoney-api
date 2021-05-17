@@ -38,6 +38,28 @@ export default class CreateBankAccountService {
       throw new AppError('Bank not found', NOT_FOUND);
     }
 
+    const coins = [
+      'GBP',
+      'ARS',
+      'CAD',
+      'AUD',
+      'JPY',
+      'CNY',
+      'BTC',
+      'EUR',
+      'USD',
+      'BRL',
+    ];
+    let checkExistsCoins = false;
+    for (let index = 0; index < coins.length; index += 1) {
+      if (symbolCoin === coins[index]) {
+        checkExistsCoins = true;
+      }
+    }
+    if (!checkExistsCoins) {
+      throw new AppError('Coin not found', NOT_FOUND);
+    }
+
     const bankAccount = await this.bankAccountsRepository.create({
       accountNumbers,
       balance,
