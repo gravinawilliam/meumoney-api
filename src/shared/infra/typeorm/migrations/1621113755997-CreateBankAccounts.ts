@@ -45,19 +45,7 @@ export default class CreateBankAccounts1621113755997
           },
           {
             name: 'symbol_coin',
-            type: 'enum',
-            enum: [
-              'GBP',
-              'ARS',
-              'CAD',
-              'AUD',
-              'JPY',
-              'CNY',
-              'BTC',
-              'EUR',
-              'USD',
-              'BRL',
-            ],
+            type: 'varchar',
           },
           {
             name: 'created_at',
