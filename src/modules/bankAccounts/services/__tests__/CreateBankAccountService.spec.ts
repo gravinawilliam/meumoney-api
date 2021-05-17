@@ -2,6 +2,7 @@ import FakeBankAccountsRepository from '@modules/bankAccounts/fakes/FakeBankAcco
 import FakeBanksRepository from '@modules/banks/fakes/FakeBanksRepository';
 import SymbolCoinEnum from '@modules/bankAccounts/interfaces/enums/SymbolCoinEnum';
 import FakeUsersRepository from '@modules/users/fakes/FakeUsersRepository';
+import AppError from '@shared/errors/AppError';
 import CreateBankAccountService from '../CreateBankAccountService';
 
 let createBankAccount: CreateBankAccountService;
@@ -16,6 +17,7 @@ describe('CreateUser', () => {
     fakeUsersRepository = new FakeUsersRepository();
     createBankAccount = new CreateBankAccountService(
       fakeBankAccountsRepository,
+      fakeUsersRepository,
     );
   });
 
@@ -42,5 +44,26 @@ describe('CreateUser', () => {
       symbolCoin: SymbolCoinEnum.USD,
     });
     expect(bankAccount).toHaveProperty('id');
+  });
+
+  it('you should not be able to create a new bank account with an invalid user id', async () => {
+    const bank = await fakeBanksRepository.create({
+      name: 'Nubank',
+      redColorCard: 12,
+      greenColorCard: 123,
+      blueColorCard: 123,
+    });
+    await expect(
+      createBankAccount.execute({
+        accountNumbers: '1323',
+        balance: 1456,
+        bankId: bank.id,
+        cardholderName: 'William Gravina',
+        monthValidity: 3,
+        userId: 'invalid id',
+        yearValidity: 21,
+        symbolCoin: SymbolCoinEnum.USD,
+      }),
+    ).rejects.toBeInstanceOf(AppError);
   });
 });
