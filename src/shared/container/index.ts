@@ -1,3 +1,5 @@
+import BankAccountsRepository from '@modules/bankAccounts/infra/typeorm/repositories/BankAccountsRepository';
+import IBankAccountsRepository from '@modules/bankAccounts/interfaces/repositories/IBankAccountsRepository';
 import BanksRepository from '@modules/banks/infra/typeorm/repositories/BanksRepository';
 import IBanksRepository from '@modules/banks/interfaces/repositories/IBanksRepository';
 import CoinsRepository from '@modules/coins/infra/typeorm/repositories/CoinsRepository';
@@ -27,4 +29,9 @@ container.registerSingleton<IBanksRepository>(
 container.registerSingleton<ICoinsRepository>(
   'CoinsRepository',
   CoinsRepository,
+);
+
+container.registerSingleton<IBankAccountsRepository>(
+  'BankAccountsRepository',
+  BankAccountsRepository,
 );
