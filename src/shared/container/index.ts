@@ -4,6 +4,8 @@ import BanksRepository from '@modules/banks/infra/typeorm/repositories/BanksRepo
 import IBanksRepository from '@modules/banks/interfaces/repositories/IBanksRepository';
 import CoinsRepository from '@modules/coins/infra/typeorm/repositories/CoinsRepository';
 import ICoinsRepository from '@modules/coins/interfaces/repositories/ICoinsRepository';
+import TransactionsRepository from '@modules/transactions/infra/typeorm/repositories/TransactionsRepository';
+import ITransactionsRepository from '@modules/transactions/interfaces/repositories/ITransactionsRepository';
 import UserRolesRepository from '@modules/users/infra/typeorm/repositories/UserRolesRepository';
 import UsersRepository from '@modules/users/infra/typeorm/repositories/UsersRepository';
 import IUserRolesRepository from '@modules/users/interfaces/repositories/IUserRolesRepository';
@@ -34,4 +36,9 @@ container.registerSingleton<ICoinsRepository>(
 container.registerSingleton<IBankAccountsRepository>(
   'BankAccountsRepository',
   BankAccountsRepository,
+);
+
+container.registerSingleton<ITransactionsRepository>(
+  'TransactionsRepository',
+  TransactionsRepository,
 );
