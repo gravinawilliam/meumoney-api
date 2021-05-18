@@ -22,6 +22,11 @@ export default class BanksRepository implements IBanksRepository {
     return foundBanks;
   }
 
+  public async findById(id: string): Promise<IBank | undefined> {
+    const foundBank = await this.ormRepository.findOne(id);
+    return foundBank;
+  }
+
   public async findByName(name: string): Promise<IBank | undefined> {
     const foundBank = await this.ormRepository.findOne({
       where: {
