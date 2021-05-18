@@ -5,10 +5,12 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   PrimaryColumn,
+  ManyToOne,
 } from 'typeorm';
 
 import { v4 } from 'uuid';
 import IBankAccount from '@modules/bankAccounts/interfaces/models/IBankAccount';
+import User from '@modules/users/infra/typeorm/entities/User';
 
 @Entity('bank_accounts')
 export default class BankAccount implements IBankAccount {
@@ -54,6 +56,9 @@ export default class BankAccount implements IBankAccount {
     type: 'varchar',
   })
   symbolCoin: string;
+
+  @ManyToOne(() => User, user => user.bankAccounts)
+  user: User;
 
   @CreateDateColumn()
   @Exclude()
