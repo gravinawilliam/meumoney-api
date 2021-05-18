@@ -20,10 +20,22 @@ export default class FakeBankAccountsRepository
     return bankCreated;
   }
 
+  public async findById(id: string): Promise<IBankAccount | undefined> {
+    const foundBankAccount = this.bankAccounts.find(
+      bankAccount => bankAccount.id === id,
+    );
+    return foundBankAccount;
+  }
+
   public async findByUserId(userId: string): Promise<IBankAccount[]> {
     const bankAccounts = this.bankAccounts.filter(bankAccount => {
       return bankAccount.userId === userId;
     });
     return bankAccounts;
+  }
+
+  public async save(bankAccount: IBankAccount): Promise<IBankAccount> {
+    this.bankAccounts.push(bankAccount);
+    return bankAccount;
   }
 }
