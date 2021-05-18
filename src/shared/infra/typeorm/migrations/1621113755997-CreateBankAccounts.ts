@@ -23,9 +23,7 @@ export default class CreateBankAccounts1621113755997
           },
           {
             name: 'balance',
-            type: 'decimal',
-            precision: 10,
-            scale: 2,
+            type: 'double precision',
           },
           {
             name: 'month_validity',
