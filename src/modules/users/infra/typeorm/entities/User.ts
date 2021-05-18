@@ -5,11 +5,13 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   PrimaryColumn,
+  OneToMany,
 } from 'typeorm';
 
 import { v4 } from 'uuid';
 import IUser from '@modules/users/interfaces/models/IUser';
 import EncryptionDataBase from '@shared/utils/EncryptionDataBase';
+import BankAccount from '@modules/bankAccounts/infra/typeorm/entities/BankAccount';
 
 @Entity('users')
 export default class User implements IUser {
@@ -34,6 +36,11 @@ export default class User implements IUser {
   })
   @Exclude()
   password: string;
+
+  @OneToMany(() => BankAccount, bankAccount => bankAccount.user, {
+    eager: true,
+  })
+  bankAccounts: BankAccount[];
 
   @CreateDateColumn()
   @Exclude()
