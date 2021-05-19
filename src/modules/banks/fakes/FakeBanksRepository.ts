@@ -29,4 +29,9 @@ export default class FakeBanksRepository implements IBanksRepository {
     const foundBank = this.banks.find(bank => bank.name === name);
     return foundBank;
   }
+
+  public async save(bank: IBank): Promise<IBank> {
+    this.banks.push(bank);
+    return bank;
+  }
 }

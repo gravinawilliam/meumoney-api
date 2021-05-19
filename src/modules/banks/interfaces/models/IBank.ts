@@ -7,4 +7,5 @@ export default interface IBank {
   blueColorCard: number;
   createdAt: Date;
   updatedAt: Date;
+  getLogoUrl(): string | null;
 }

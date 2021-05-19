@@ -6,4 +6,5 @@ export default interface IBanksRepository {
   findAll(): Promise<IBank[]>;
   findById(id: string): Promise<IBank | undefined>;
   findByName(name: string): Promise<IBank | undefined>;
+  save(bank: IBank): Promise<IBank>;
 }
