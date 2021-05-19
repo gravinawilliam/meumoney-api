@@ -5,11 +5,13 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   PrimaryColumn,
+  OneToMany,
 } from 'typeorm';
 
 import { v4 } from 'uuid';
 import IBank from '@modules/banks/interfaces/models/IBank';
 import uploadConfig from '@config/upload.config';
+import BankAccount from '@modules/bankAccounts/infra/typeorm/entities/BankAccount';
 
 @Entity('banks')
 export default class Bank implements IBank {
@@ -44,6 +46,9 @@ export default class Bank implements IBank {
     type: 'integer',
   })
   blueColorCard: number;
+
+  @OneToMany(() => BankAccount, bankAccount => bankAccount.bank)
+  bankAccounts: BankAccount[];
 
   @CreateDateColumn()
   @Exclude()
