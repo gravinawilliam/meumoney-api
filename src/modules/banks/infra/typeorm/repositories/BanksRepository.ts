@@ -35,4 +35,9 @@ export default class BanksRepository implements IBanksRepository {
     });
     return foundBank;
   }
+
+  public async save(bank: IBank): Promise<IBank> {
+    await this.ormRepository.save(bank);
+    return bank;
+  }
 }
