@@ -11,6 +11,7 @@ import {
 import { v4 } from 'uuid';
 import IBankAccount from '@modules/bankAccounts/interfaces/models/IBankAccount';
 import User from '@modules/users/infra/typeorm/entities/User';
+import Bank from '@modules/banks/infra/typeorm/entities/Bank';
 
 @Entity('bank_accounts')
 export default class BankAccount implements IBankAccount {
@@ -59,6 +60,11 @@ export default class BankAccount implements IBankAccount {
 
   @ManyToOne(() => User, user => user.bankAccounts)
   user: User;
+
+  @ManyToOne(() => Bank, bank => bank.bankAccounts, {
+    eager: true,
+  })
+  bank: Bank;
 
   @CreateDateColumn()
   @Exclude()
