@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { verify } from 'jsonwebtoken';
 import authConfig from '@config/auth.config';
 import AppError from '@shared/errors/AppError';
+import tokenValidator from '../validators/token';
 
 interface ITokenPayload {
   iat: number;
@@ -9,7 +10,7 @@ interface ITokenPayload {
   sub: string;
 }
 
-export default function ensureAuthenticated(
+function ensureAuthenticated(
   req: Request,
   res: Response,
   next: NextFunction,
@@ -30,3 +31,5 @@ export default function ensureAuthenticated(
     throw new AppError('Invalid JWT token', 401);
   }
 }
+
+export default [tokenValidator, ensureAuthenticated];
