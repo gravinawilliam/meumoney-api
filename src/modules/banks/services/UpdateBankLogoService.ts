@@ -1,8 +1,8 @@
 import IStorageProvider from '@shared/container/providers/StorageProvider/models/IStorageProvider';
 import { inject, injectable } from 'tsyringe';
 import AppError from '../../../shared/errors/AppError';
-import Bank from '../infra/typeorm/entities/Bank';
 import IUpdateBankLogoDTO from '../interfaces/dtos/IUpdateBankLogoDTO';
+import IBank from '../interfaces/models/IBank';
 import IBanksRepository from '../interfaces/repositories/IBanksRepository';
 
 @injectable()
@@ -14,7 +14,7 @@ export default class UpdateBankLogoService {
     private storageProvider: IStorageProvider,
   ) {}
 
-  public async execute({ bankId, logo }: IUpdateBankLogoDTO): Promise<Bank> {
+  public async execute({ bankId, logo }: IUpdateBankLogoDTO): Promise<IBank> {
     const bank = await this.banksRepository.findById(bankId);
     if (!bank) {
       throw new AppError('Only authenticated users can change avatar', 401);

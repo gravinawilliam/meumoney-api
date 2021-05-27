@@ -1,0 +1,14 @@
+version: '3.3'
+
+services:
+  pg:
+    container_name: pg_meumoney
+    image: 'bitnami/postgresql:latest'
+    environment:
+      POSTGRESQL_PASSWORD: ${DEFAULT_PASSWORD}
+      POSTGRESQL_USERNAME: ${DEFAULT_USERNAME}
+      POSTGRESQL_DATABASE: ${DEFAULT_DB_NAME}
+      POSTGRESQL_TIMEZONE: America/SAO_PAULO
+    ports:
+      - "${DEFAULT_PORT}:5432"
+    restart: unless-stopped

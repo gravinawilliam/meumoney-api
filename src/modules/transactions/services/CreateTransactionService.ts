@@ -42,7 +42,7 @@ export default class CreateTransactionService {
       fromBankAccountId,
     );
     if (!fromBankAccount) {
-      throw new AppError('From Bank Account  not found', 404);
+      throw new AppError('From Bank Account  not found', NOT_FOUND);
     }
 
     let toBankAccount;
@@ -52,7 +52,7 @@ export default class CreateTransactionService {
       );
     }
     if (!toBankAccount && toBankAccountId != null) {
-      throw new AppError('Bank Account not found', 404);
+      throw new AppError('Bank Account not found', NOT_FOUND);
     }
 
     switch (transactionType) {
