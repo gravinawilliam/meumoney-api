@@ -29,4 +29,22 @@ describe('Update Bank Logo', () => {
     });
     expect(updatedBankLogo.logo).toBe('logo.jpg');
   });
+
+  it('you must be able to update the bank logo even if you have another registered', async () => {
+    const bank = await fakeBanksRepository.create({
+      name: 'Nubank',
+      blueColorCard: 211,
+      greenColorCard: 123,
+      redColorCard: 31,
+    });
+    await updateBankLogo.execute({
+      bankId: bank.id,
+      logo: 'logo.jpg',
+    });
+    const updatedBankLogo = await updateBankLogo.execute({
+      bankId: bank.id,
+      logo: 'logo2.jpg',
+    });
+    expect(updatedBankLogo.logo).toBe('logo2.jpg');
+  });
 });
