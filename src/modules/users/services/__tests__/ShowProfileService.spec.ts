@@ -1,4 +1,5 @@
 import FakeUsersRepository from '@modules/users/fakes/FakeUsersRepository';
+import AppError from '@shared/errors/AppError';
 import ShowProfileService from '../ShowProfileService';
 
 let fakeUsersRepository: FakeUsersRepository;
@@ -22,5 +23,13 @@ describe('Show Profile', () => {
     });
 
     expect(profile).toHaveProperty('id');
+  });
+
+  it('must not be able to show the profile with invalid user id', async () => {
+    await expect(
+      showProfile.execute({
+        userId: 'invalid id',
+      }),
+    ).rejects.toBeInstanceOf(AppError);
   });
 });
