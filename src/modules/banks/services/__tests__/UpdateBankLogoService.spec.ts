@@ -1,5 +1,6 @@
 import FakeBanksRepository from '@modules/banks/fakes/FakeBanksRepository';
 import FakeStorageProvider from '@shared/container/providers/StorageProvider/fakes/FakeStorageProvider';
+import AppError from '@shared/errors/AppError';
 import UpdateBankLogoService from '../UpdateBankLogoService';
 
 let fakeBanksRepository: FakeBanksRepository;
@@ -46,5 +47,14 @@ describe('Update Bank Logo', () => {
       logo: 'logo2.jpg',
     });
     expect(updatedBankLogo.logo).toBe('logo2.jpg');
+  });
+
+  it('should not be able to update the bank logo with invalid bank id', async () => {
+    await expect(
+      updateBankLogo.execute({
+        bankId: 'invalid id',
+        logo: 'logo.jpg',
+      }),
+    ).rejects.toBeInstanceOf(AppError);
   });
 });
