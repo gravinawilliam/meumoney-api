@@ -1,6 +1,7 @@
 import FakeBanksRepository from '@modules/banks/fakes/FakeBanksRepository';
 import FakeTransactionsRepository from '@modules/transactions/fakes/FakeTransactionsRepository';
 import FakeUsersRepository from '@modules/users/fakes/FakeUsersRepository';
+import AppError from '@shared/errors/AppError';
 import ListTransactionByDateUserIdService from '../ListTransactionByDateUserIdService';
 
 let fakeTransactionsRepository: FakeTransactionsRepository;
@@ -60,5 +61,14 @@ describe('List Transaction By Date User Id', () => {
       userId: user.id,
     });
     expect(transactions).toEqual([transaction]);
+  });
+
+  it('should not be able to list transactions by date and user id with an invalid user id', async () => {
+    await expect(
+      listTransactionByDateUserId.execute({
+        date: '2021-06-22',
+        userId: 'invalid id',
+      }),
+    ).rejects.toBeInstanceOf(AppError);
   });
 });
