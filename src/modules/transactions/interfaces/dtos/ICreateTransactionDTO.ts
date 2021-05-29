@@ -7,5 +7,5 @@ export default interface ICreateTransactionDTO {
   symbolCoin: string;
   userId: string;
   fromBankAccountId: string;
-  toBankAccountId: string;
+  toBankAccountId?: string;
 }
