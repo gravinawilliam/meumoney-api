@@ -24,7 +24,7 @@ describe('Create Transaction', () => {
     );
   });
 
-  it('should be able to create new transaction', async () => {
+  it('must be able to create an gain type transaction', async () => {
     const bank = await fakeBanksRepository.create({
       blueColorCard: 123,
       greenColorCard: 154,
@@ -61,6 +61,7 @@ describe('Create Transaction', () => {
     });
 
     expect(transactionCreated).toHaveProperty('id');
+    expect(transactionCreated.transactionType).toBe('gain');
   });
 
   it('must be able to create an expense type transaction', async () => {
@@ -101,6 +102,58 @@ describe('Create Transaction', () => {
 
     expect(transactionCreated).toHaveProperty('id');
     expect(transactionCreated.transactionType).toBe('expense');
+  });
+
+  it('must be able to create an transfer type transaction', async () => {
+    const bank = await fakeBanksRepository.create({
+      blueColorCard: 123,
+      greenColorCard: 154,
+      redColorCard: 133,
+      name: 'Nubank',
+    });
+
+    const user = await fakeUsersRepository.create({
+      email: 'will@gmail.com',
+      name: 'will',
+      password: '21312',
+    });
+
+    const fromBankAccount = await fakeBankAccountsRepository.create({
+      accountNumbers: '123',
+      balance: 1456.5,
+      bankId: bank.id,
+      cardholderName: 'William',
+      monthValidity: 5,
+      yearValidity: 25,
+      symbolCoin: 'BRL',
+      userId: user.id,
+    });
+
+    const toBankAccount = await fakeBankAccountsRepository.create({
+      accountNumbers: '331',
+      balance: 3333.5,
+      bankId: bank.id,
+      cardholderName: 'William Gravina',
+      monthValidity: 6,
+      yearValidity: 30,
+      symbolCoin: 'BRL',
+      userId: user.id,
+    });
+
+    const transactionCreated = await createTransaction.execute({
+      date: new Date(2021, 6, 21),
+      fromBankAccountId: fromBankAccount.id,
+      note: 'note',
+      symbolCoin: 'BRL',
+      title: 'title',
+      transactionType: 'transfer',
+      userId: user.id,
+      value: 123,
+      toBankAccountId: toBankAccount.id,
+    });
+
+    expect(transactionCreated).toHaveProperty('id');
+    expect(transactionCreated.transactionType).toBe('transfer');
   });
 
   it('should not be able to create a negative transaction', async () => {
