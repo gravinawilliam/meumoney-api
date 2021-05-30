@@ -7,14 +7,18 @@
   "license": "MIT",
   "scripts": {
     "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files",
-    "dev": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules src/shared/infra/http/server.ts",
+    "dev": "yarn up && yarn dev:server",
+    "dev:server": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules src/shared/infra/http/server.ts",
+    "down": "docker-compose down",
     "start": "node dist/shared/infra/http/server.js",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
-    "test:verbose": "jest --detectOpenHandles --passWithNoTests --runInBand",
-    "test:unit": "yarn test --watch -c jest-unit-config.js",
-    "test:staged": "yarn test --findRelatedTests",
     "test:ci": "yarn test --coverage",
-    "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js"
+    "test:coveralls": "yarn test:ci && coveralls < coverage/lcov.info",
+    "test:staged": "yarn test --findRelatedTests",
+    "test:unit": "yarn test --watch -c jest-unit-config.js",
+    "test:verbose": "jest --detectOpenHandles --passWithNoTests --runInBand",
+    "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
+    "up": "docker-compose up -d"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.10",

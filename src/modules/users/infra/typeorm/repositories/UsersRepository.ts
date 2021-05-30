@@ -17,8 +17,13 @@ export default class UsersRepository implements IUsersRepository {
     return userCreated;
   }
 
+  public async delete(user: IUser): Promise<IUser> {
+    const deletedUser = await this.ormRepository.remove(user);
+    return deletedUser;
+  }
+
   public async findByEmail(email: string): Promise<IUser | undefined> {
-    const userFound = this.ormRepository.findOne({
+    const userFound = await this.ormRepository.findOne({
       where: {
         email,
       },
@@ -27,7 +32,7 @@ export default class UsersRepository implements IUsersRepository {
   }
 
   public async findById(id: string): Promise<IUser | undefined> {
-    const userFound = this.ormRepository.findOne(id);
+    const userFound = await this.ormRepository.findOne(id);
     return userFound;
   }
 }

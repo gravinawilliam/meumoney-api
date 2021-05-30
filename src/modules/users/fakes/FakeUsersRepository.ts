@@ -16,6 +16,13 @@ export default class FakeUsersRepository implements IUsersRepository {
     return userCreated;
   }
 
+  public async delete(user: IUser): Promise<IUser> {
+    const findIndex = this.users.findIndex(i => i.id === user.id);
+    const deletedUser = this.users[findIndex];
+    this.users.splice(findIndex, 1);
+    return deletedUser;
+  }
+
   public async findByEmail(email: string): Promise<IUser | undefined> {
     const foundUser = this.users.find(user => user.email === email);
     return foundUser;
