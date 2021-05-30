@@ -81,13 +81,9 @@ export default class CreateTransactionService {
         throw new AppError(`Incorrect transaction type: ${transactionType}`);
     }
 
-    try {
-      await this.bankAccountsRepository.save(fromBankAccount);
-      if (toBankAccount) {
-        await this.bankAccountsRepository.save(toBankAccount);
-      }
-    } catch (error) {
-      throw new AppError(`Error saving transfer amount to account: ${error}`);
+    await this.bankAccountsRepository.save(fromBankAccount);
+    if (toBankAccount) {
+      await this.bankAccountsRepository.save(toBankAccount);
     }
 
     const transaction = await this.transactionsRepository.create({
