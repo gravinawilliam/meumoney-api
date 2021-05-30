@@ -46,12 +46,16 @@ export default class CreateTransactionService {
     }
 
     let toBankAccount;
-    if (toBankAccountId != null) {
+    if (toBankAccountId != null && transactionType === 'transfer') {
       toBankAccount = await this.bankAccountsRepository.findById(
         toBankAccountId,
       );
     }
-    if (!toBankAccount && toBankAccountId != null) {
+    if (
+      !toBankAccount &&
+      toBankAccountId != null &&
+      transactionType === 'transfer'
+    ) {
       throw new AppError('Bank Account not found', NOT_FOUND);
     }
 
@@ -68,11 +72,13 @@ export default class CreateTransactionService {
         if (toBankAccount) {
           fromBankAccount.balance -= value;
           toBankAccount.balance += value;
+        } else {
+          throw new AppError('To bank account not found', NOT_FOUND);
         }
         break;
 
       default:
-        throw new AppError(`Tipo de transação incorreto: ${transactionType}`);
+        throw new AppError(`Incorrect transaction type: ${transactionType}`);
     }
 
     try {
@@ -81,9 +87,7 @@ export default class CreateTransactionService {
         await this.bankAccountsRepository.save(toBankAccount);
       }
     } catch (error) {
-      throw new AppError(
-        `Erro ao salvar o valor da transferencia na conta error: ${error}`,
-      );
+      throw new AppError(`Error saving transfer amount to account: ${error}`);
     }
 
     const transaction = await this.transactionsRepository.create({
