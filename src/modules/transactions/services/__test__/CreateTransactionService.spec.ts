@@ -313,4 +313,43 @@ describe('Create Transaction', () => {
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
+
+  it('should not be able to create a transaction with an invalid bank account id', async () => {
+    const bank = await fakeBanksRepository.create({
+      blueColorCard: 123,
+      greenColorCard: 154,
+      redColorCard: 133,
+      name: 'Nubank',
+    });
+
+    const user = await fakeUsersRepository.create({
+      email: 'will@gmail.com',
+      name: 'will',
+      password: '21312',
+    });
+
+    const bankAccount = await fakeBankAccountsRepository.create({
+      accountNumbers: '123',
+      balance: 1456.5,
+      bankId: bank.id,
+      cardholderName: 'William',
+      monthValidity: 5,
+      yearValidity: 25,
+      symbolCoin: 'BRL',
+      userId: user.id,
+    });
+
+    await expect(
+      createTransaction.execute({
+        date: new Date(2021, 6, 21),
+        fromBankAccountId: bankAccount.id,
+        note: 'note',
+        symbolCoin: 'BRL',
+        title: 'title',
+        transactionType: 'transfer',
+        userId: user.id,
+        value: 123,
+      }),
+    ).rejects.toBeInstanceOf(AppError);
+  });
 });
