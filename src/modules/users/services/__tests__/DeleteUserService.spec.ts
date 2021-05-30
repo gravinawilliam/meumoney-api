@@ -35,4 +35,19 @@ describe('Delete User', () => {
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
+
+  it('should not be able to delete the user with an invalid password', async () => {
+    const user = await fakeUsersRepository.create({
+      email: 'william@example.com',
+      password: '123456789',
+      name: 'William',
+    });
+
+    await expect(
+      deleteUser.execute({
+        userId: user.id,
+        password: 'incorrect password',
+      }),
+    ).rejects.toBeInstanceOf(AppError);
+  });
 });
