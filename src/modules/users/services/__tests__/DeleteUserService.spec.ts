@@ -1,5 +1,6 @@
 import FakeUsersRepository from '@modules/users/fakes/FakeUsersRepository';
 import FakeHashProvider from '@shared/container/providers/HashProvider/fakes/FakeHashProvider';
+import AppError from '@shared/errors/AppError';
 import DeleteUserService from '../DeleteUserService';
 
 let fakeUsersRepository: FakeUsersRepository;
@@ -24,5 +25,14 @@ describe('Delete User', () => {
       password: user.password,
     });
     expect(deletedUser).toEqual(user);
+  });
+
+  it('should not be able to delete the user with an invalid user id', async () => {
+    await expect(
+      deleteUser.execute({
+        userId: 'invalid id',
+        password: 'password correct',
+      }),
+    ).rejects.toBeInstanceOf(AppError);
   });
 });
