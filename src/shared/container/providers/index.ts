@@ -1,3 +1,4 @@
+import './GenerateTokenProvider';
 import './HashProvider';
-import './ValidatorEmailProvider';
 import './StorageProvider';
+import './ValidatorEmailProvider';
