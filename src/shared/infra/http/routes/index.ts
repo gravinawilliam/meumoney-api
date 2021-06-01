@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import users from '@modules/users/infra/http/routes/users.routes';
+import passwords from '@modules/users/infra/http/routes/passwords.routes';
 import sessions from '@modules/users/infra/http/routes/sessions.routes';
 import profiles from '@modules/users/infra/http/routes/profiles.routes';
 import banks from '@modules/banks/infra/http/routes/banks.routes';
@@ -16,5 +17,6 @@ routes.use('/coins', coins);
 routes.use('/bankAccounts', bankAccounts);
 routes.use('/transactions', transactions);
 routes.use('/profiles', profiles);
+routes.use('/passwords', passwords);
 
 export default routes;

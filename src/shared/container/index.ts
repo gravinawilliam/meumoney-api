@@ -8,8 +8,10 @@ import TransactionsRepository from '@modules/transactions/infra/typeorm/reposito
 import ITransactionsRepository from '@modules/transactions/interfaces/repositories/ITransactionsRepository';
 import UserRolesRepository from '@modules/users/infra/typeorm/repositories/UserRolesRepository';
 import UsersRepository from '@modules/users/infra/typeorm/repositories/UsersRepository';
+import UserTokensRepository from '@modules/users/infra/typeorm/repositories/UserTokensRepository';
 import IUserRolesRepository from '@modules/users/interfaces/repositories/IUserRolesRepository';
 import IUsersRepository from '@modules/users/interfaces/repositories/IUsersRepository';
+import IUserTokensRepository from '@modules/users/interfaces/repositories/IUserTokensRepository';
 import { container } from 'tsyringe';
 import './providers';
 
@@ -21,6 +23,11 @@ container.registerSingleton<IUsersRepository>(
 container.registerSingleton<IUserRolesRepository>(
   'UserRolesRepository',
   UserRolesRepository,
+);
+
+container.registerSingleton<IUserTokensRepository>(
+  'UserTokensRepository',
+  UserTokensRepository,
 );
 
 container.registerSingleton<IBanksRepository>(

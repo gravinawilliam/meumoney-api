@@ -1,3 +1,6 @@
+import './GenerateTokenProvider';
 import './HashProvider';
-import './ValidatorEmailProvider';
+import './MailTemplateProvider';
+import './MailProvider';
 import './StorageProvider';
+import './ValidatorEmailProvider';
