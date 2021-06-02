@@ -1,4 +1,5 @@
 import ICreateTransactionDTO from '../dtos/ICreateTransactionDTO';
+import IDeleteTransactionDTO from '../dtos/IDeleteTransactionDTO';
 import IListTransactionByDateUserIdDTO from '../dtos/IListTransactionByDateUserIdDTO';
 import ITransaction from '../models/ITransaction';
 
@@ -8,4 +9,9 @@ export default interface ITransactionsRepository {
     date,
     userId,
   }: IListTransactionByDateUserIdDTO): Promise<ITransaction[]>;
+  findByTransactionIdUserId({
+    transactionId,
+    userId,
+  }: IDeleteTransactionDTO): Promise<ITransaction | undefined>;
+  delete(transaction: ITransaction): Promise<ITransaction>;
 }
