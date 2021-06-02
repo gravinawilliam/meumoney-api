@@ -3,6 +3,7 @@ import ensureAuthenticated from '@shared/infra/http/middlewares/ensureAuthentica
 import TransactionsController from '../controllers/TransactionsController';
 import UserTransactionsByDateController from '../controllers/UserTransactionsByDateController';
 import listTransactionsByDateUserIdValidator from '../validators/ListTransactionsByDateUserId';
+import createTransactionValidator from '../validators/CreateTransaction';
 
 const transactionsRouter = Router();
 const transactionsController = new TransactionsController();
@@ -10,7 +11,12 @@ const userTransactionsByDateController = new UserTransactionsByDateController();
 
 transactionsRouter.use(ensureAuthenticated);
 
-transactionsRouter.post('/', transactionsController.create);
+transactionsRouter.post(
+  '/',
+  createTransactionValidator,
+  transactionsController.create,
+);
+
 transactionsRouter.get(
   '/',
   listTransactionsByDateUserIdValidator,
