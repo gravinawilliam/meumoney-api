@@ -23,4 +23,6 @@ transactionsRouter.get(
   userTransactionsByDateController.index,
 );
 
+transactionsRouter.delete('/:transactionId', transactionsController.delete);
+
 export default transactionsRouter;
