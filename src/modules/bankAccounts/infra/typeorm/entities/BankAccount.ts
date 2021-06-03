@@ -29,7 +29,9 @@ export default class BankAccount implements IBankAccount {
   cardholderName: string;
 
   @Column({
-    type: 'double precision',
+    type: 'decimal',
+    precision: 10,
+    scale: 2,
   })
   balance: number;
 
