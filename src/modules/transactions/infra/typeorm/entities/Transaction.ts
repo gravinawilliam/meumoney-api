@@ -15,7 +15,9 @@ export default class Transaction implements ITransaction {
   id: string;
 
   @Column({
-    type: 'double precision',
+    type: 'decimal',
+    precision: 10,
+    scale: 2,
   })
   value: number;
 
