@@ -60,7 +60,7 @@ export default class CreateBankAccountService {
       throw new AppError('Coin not found', NOT_FOUND);
     }
 
-    const bankAccount = await this.bankAccountsRepository.create({
+    const createdBankAccount = await this.bankAccountsRepository.create({
       accountNumbers,
       balance,
       bankId,
@@ -70,6 +70,15 @@ export default class CreateBankAccountService {
       userId,
       yearValidity,
     });
+
+    const bankAccount = await this.bankAccountsRepository.findById(
+      createdBankAccount.id,
+    );
+
+    if (!bankAccount) {
+      throw new AppError('BankAccount not found', NOT_FOUND);
+    }
+
     return bankAccount;
   }
 }
