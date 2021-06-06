@@ -1,5 +1,6 @@
 import FakeNotificationsRepository from '@modules/notifications/fakes/FakeNotificationsRepository';
 import FakeUsersRepository from '@modules/users/fakes/FakeUsersRepository';
+import AppError from '@shared/errors/AppError';
 import ShowUnseenNotificationByUserService from '../ShowUnseenNotificationByUserService';
 
 let fakeNotificationsRepository: FakeNotificationsRepository;
@@ -37,5 +38,13 @@ describe('Show Unseen Notification By User', () => {
 
     expect(foundNotification).toEqual(notification);
     expect(foundNotification.viewed).toBe(true);
+  });
+
+  it('should not be able to show unseen notification with invalid user id', async () => {
+    await expect(
+      showUnseenNotificationByUser.execute({
+        userId: 'invalid id',
+      }),
+    ).rejects.toBeInstanceOf(AppError);
   });
 });
