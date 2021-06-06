@@ -2,6 +2,7 @@ import { inject, injectable } from 'tsyringe';
 import { CONFLICT, NOT_FOUND } from '@shared/constants/HttpStatusCode';
 import IUsersRepository from '@modules/users/interfaces/repositories/IUsersRepository';
 import IBankAccountsRepository from '@modules/bankAccounts/interfaces/repositories/IBankAccountsRepository';
+import IAntiFraudProvider from '@shared/container/providers/AntiFraudProvider/interfaces/IAntiFraudProvider';
 import AppError from '../../../shared/errors/AppError';
 import ICreateTransactionDTO from '../interfaces/dtos/ICreateTransactionDTO';
 import ITransactionsRepository from '../interfaces/repositories/ITransactionsRepository';
@@ -16,6 +17,8 @@ export default class CreateTransactionService {
     private usersRepository: IUsersRepository,
     @inject('BankAccountsRepository')
     private bankAccountsRepository: IBankAccountsRepository,
+    @inject('AntiFraudProvider')
+    private antiFraudProvider: IAntiFraudProvider,
   ) {}
 
   public async execute({
@@ -97,6 +100,10 @@ export default class CreateTransactionService {
       toBankAccountId: toBankAccountId || null,
       date,
     });
+
+    await this.antiFraudProvider.benford(transaction);
+
+    await this.transactionsRepository.save(transaction);
 
     return transaction;
   }
