@@ -19,7 +19,6 @@ export default class FakeTransactionsRepository
       id: v4(),
       ...transaction,
     });
-    this.transactions.push(transactionCreated);
     return transactionCreated;
   }
 
@@ -35,7 +34,7 @@ export default class FakeTransactionsRepository
     userId,
   }: IListTransactionByDateUserIdDTO): Promise<ITransaction[]> {
     const newDate = new Date(date);
-    const transactions = this.transactions.filter(transaction => {
+    const foundTransactions = this.transactions.filter(transaction => {
       return (
         transaction.userId === userId &&
         getDay(transaction.date) === getDay(newDate) + 1 &&
@@ -43,17 +42,28 @@ export default class FakeTransactionsRepository
         getYear(transaction.date) === getYear(newDate)
       );
     });
-    return transactions;
+    return foundTransactions;
   }
 
   public async findByTransactionIdUserId({
     transactionId,
     userId,
   }: IDeleteTransactionDTO): Promise<ITransaction | undefined> {
-    const foundBankAccount = this.transactions.find(
+    const foundTransaction = this.transactions.find(
       transaction =>
         transaction.id === transactionId && transaction.userId === userId,
     );
-    return foundBankAccount;
+    return foundTransaction;
+  }
+
+  public async findByUserId(userId: string): Promise<ITransaction[]> {
+    const foundTransactions = this.transactions.filter(transaction => {
+      return transaction.userId === userId;
+    });
+    return foundTransactions;
+  }
+
+  public async save(transaction: ITransaction): Promise<void> {
+    this.transactions.push(transaction);
   }
 }
