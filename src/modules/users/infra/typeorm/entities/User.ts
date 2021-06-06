@@ -37,9 +37,7 @@ export default class User implements IUser {
   @Exclude()
   password: string;
 
-  @OneToMany(() => BankAccount, bankAccount => bankAccount.user, {
-    eager: true,
-  })
+  @OneToMany(() => BankAccount, bankAccount => bankAccount.user)
   bankAccounts: BankAccount[];
 
   @CreateDateColumn()
