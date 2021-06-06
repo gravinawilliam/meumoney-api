@@ -94,7 +94,7 @@ export default class CreateTransactionService {
       value,
       fromBankAccountId,
       symbolCoin,
-      toBankAccountId,
+      toBankAccountId: toBankAccountId || null,
       date,
     });
 
