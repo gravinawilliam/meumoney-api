@@ -47,4 +47,18 @@ describe('Show Unseen Notification By User', () => {
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
+
+  it('should not be able to show unseen notification if it doesnt have one with the attribute viewed true', async () => {
+    const user = await fakeUsersRepository.create({
+      email: 'wil@gmail.com',
+      name: 'will',
+      password: '123456789',
+    });
+
+    await expect(
+      showUnseenNotificationByUser.execute({
+        userId: user.id,
+      }),
+    ).rejects.toBeInstanceOf(AppError);
+  });
 });
