@@ -22,4 +22,14 @@ export default class FakeNotificationsRepository
   public async save(notification: INotification): Promise<void> {
     this.notifications.push(notification);
   }
+
+  public async findUnseenNotification(
+    userId: string,
+  ): Promise<INotification | undefined> {
+    const foundNotification = this.notifications.find(
+      notification =>
+        notification.userId === userId && notification.viewed === false,
+    );
+    return foundNotification;
+  }
 }
