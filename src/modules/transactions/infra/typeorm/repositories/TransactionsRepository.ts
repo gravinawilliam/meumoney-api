@@ -22,7 +22,7 @@ export default class TransactionsRepository implements ITransactionsRepository {
   }
 
   public async delete(transaction: ITransaction): Promise<ITransaction> {
-    const deletedTransaction = this.ormRepository.remove(transaction);
+    const deletedTransaction = await this.ormRepository.remove(transaction);
     return deletedTransaction;
   }
 
@@ -30,7 +30,7 @@ export default class TransactionsRepository implements ITransactionsRepository {
     date,
     userId,
   }: IListTransactionByDateUserIdDTO): Promise<ITransaction[]> {
-    const transactions = this.ormRepository.find({
+    const transactions = await this.ormRepository.find({
       where: {
         date,
         userId,
@@ -43,7 +43,7 @@ export default class TransactionsRepository implements ITransactionsRepository {
     transactionId,
     userId,
   }: IDeleteTransactionDTO): Promise<ITransaction | undefined> {
-    const deletedTransaction = this.ormRepository.findOne({
+    const deletedTransaction = await this.ormRepository.findOne({
       where: {
         id: transactionId,
         userId,
