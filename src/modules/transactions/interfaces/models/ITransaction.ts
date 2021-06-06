@@ -7,7 +7,7 @@ export default interface ITransaction {
   symbolCoin: string;
   userId: string;
   fromBankAccountId: string;
-  toBankAccountId?: string;
+  toBankAccountId?: string | null;
   date: Date;
   createdAt: Date;
   updatedAt: Date;

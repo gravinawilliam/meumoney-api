@@ -5,6 +5,7 @@ import ITransaction from '../models/ITransaction';
 
 export default interface ITransactionsRepository {
   create(transaction: ICreateTransactionDTO): Promise<ITransaction>;
+  delete(transaction: ITransaction): Promise<ITransaction>;
   findByDateUserId({
     date,
     userId,
@@ -13,5 +14,6 @@ export default interface ITransactionsRepository {
     transactionId,
     userId,
   }: IDeleteTransactionDTO): Promise<ITransaction | undefined>;
-  delete(transaction: ITransaction): Promise<ITransaction>;
+  findByUserId(userId: string): Promise<ITransaction[]>;
+  save(transaction: ITransaction): Promise<void>;
 }

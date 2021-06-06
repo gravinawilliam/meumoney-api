@@ -58,6 +58,8 @@ describe('Delete Transaction', () => {
       value: 123,
     });
 
+    await fakeTransactionsRepository.save(transaction);
+
     const deletedTransaction = await deleteTransaction.execute({
       transactionId: transaction.id,
       userId: user.id,

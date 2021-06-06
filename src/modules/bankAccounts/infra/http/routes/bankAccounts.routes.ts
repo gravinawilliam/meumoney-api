@@ -14,4 +14,6 @@ bankAccountsRouter.post(
   bankAccountsController.create,
 );
 
+bankAccountsRouter.get('/', bankAccountsController.index);
+
 export default bankAccountsRouter;

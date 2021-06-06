@@ -45,16 +45,7 @@ describe('List Transaction By Date User Id', () => {
       value: 123,
     });
 
-    await fakeTransactionsRepository.create({
-      date: new Date(2021, 6, 21),
-      fromBankAccountId: bank.id,
-      note: 'note',
-      symbolCoin: 'BRL',
-      title: 'title',
-      transactionType: 'gain',
-      userId: user.id,
-      value: 123,
-    });
+    await fakeTransactionsRepository.save(transaction);
 
     const transactions = await listTransactionByDateUserId.execute({
       date: '2021-06-22',
