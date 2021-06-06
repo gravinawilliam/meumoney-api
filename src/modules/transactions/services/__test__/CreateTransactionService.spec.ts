@@ -2,6 +2,7 @@ import FakeBankAccountsRepository from '@modules/bankAccounts/fakes/FakeBankAcco
 import FakeBanksRepository from '@modules/banks/fakes/FakeBanksRepository';
 import FakeTransactionsRepository from '@modules/transactions/fakes/FakeTransactionsRepository';
 import FakeUsersRepository from '@modules/users/fakes/FakeUsersRepository';
+import FakeAntiFraudProvider from '@shared/container/providers/AntiFraudProvider/fakes/FakeAntiFraudProvider';
 import AppError from '@shared/errors/AppError';
 import CreateTransactionService from '../CreateTransactionService';
 
@@ -9,6 +10,7 @@ let fakeTransactionsRepository: FakeTransactionsRepository;
 let fakeUsersRepository: FakeUsersRepository;
 let fakeBankAccountsRepository: FakeBankAccountsRepository;
 let fakeBanksRepository: FakeBanksRepository;
+let fakeAntiFraudProvider: FakeAntiFraudProvider;
 let createTransaction: CreateTransactionService;
 
 describe('Create Transaction', () => {
@@ -17,10 +19,12 @@ describe('Create Transaction', () => {
     fakeUsersRepository = new FakeUsersRepository();
     fakeBankAccountsRepository = new FakeBankAccountsRepository();
     fakeBanksRepository = new FakeBanksRepository();
+    fakeAntiFraudProvider = new FakeAntiFraudProvider();
     createTransaction = new CreateTransactionService(
       fakeTransactionsRepository,
       fakeUsersRepository,
       fakeBankAccountsRepository,
+      fakeAntiFraudProvider,
     );
   });
 
