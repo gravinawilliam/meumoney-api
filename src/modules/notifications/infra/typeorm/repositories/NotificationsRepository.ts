@@ -23,4 +23,19 @@ export default class NotificationsRepository
   public async save(notification: INotification): Promise<void> {
     await this.ormRepository.save(notification);
   }
+
+  public async findUnseenNotification(
+    userId: string,
+  ): Promise<INotification | undefined> {
+    const foundNotification = this.ormRepository.findOne({
+      where: {
+        userId,
+        viewed: false,
+      },
+      order: {
+        createdAt: 'DESC',
+      },
+    });
+    return foundNotification;
+  }
 }
