@@ -17,7 +17,6 @@ export default class TransactionsRepository implements ITransactionsRepository {
     transaction: ICreateTransactionDTO,
   ): Promise<ITransaction> {
     const transactionCreated = this.ormRepository.create(transaction);
-    await this.ormRepository.save(transactionCreated);
     return transactionCreated;
   }
 
@@ -50,5 +49,18 @@ export default class TransactionsRepository implements ITransactionsRepository {
       },
     });
     return deletedTransaction;
+  }
+
+  public async findByUserId(userId: string): Promise<ITransaction[]> {
+    const foundTransactions = await this.ormRepository.find({
+      where: {
+        userId,
+      },
+    });
+    return foundTransactions;
+  }
+
+  public async save(transaction: ITransaction): Promise<void> {
+    await this.ormRepository.save(transaction);
   }
 }
