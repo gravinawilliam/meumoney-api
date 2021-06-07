@@ -58,7 +58,7 @@ export default class Bank implements IBank {
   @Exclude()
   updatedAt: Date;
 
-  @Expose({ name: 'logo_url' })
+  @Expose({ name: 'logoUrl' })
   getLogoUrl(): string | null {
     if (!this.logo) return null;
     switch (uploadConfig.driver) {
