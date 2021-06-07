@@ -19,6 +19,10 @@ export default class BankAccountsRepository implements IBankAccountsRepository {
     return bankAccountCreated;
   }
 
+  public async delete(bankAccount: IBankAccount): Promise<void> {
+    await this.ormRepository.remove(bankAccount);
+  }
+
   public async findById(id: string): Promise<IBankAccount | undefined> {
     const foundBankAccount = await this.ormRepository.findOne(id);
     return foundBankAccount;
