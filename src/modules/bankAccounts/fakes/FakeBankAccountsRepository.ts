@@ -20,6 +20,11 @@ export default class FakeBankAccountsRepository
     return bankCreated;
   }
 
+  public async delete(bankAccount: IBankAccount): Promise<void> {
+    const findIndex = this.bankAccounts.findIndex(i => i.id === bankAccount.id);
+    this.bankAccounts.splice(findIndex, 1);
+  }
+
   public async findById(id: string): Promise<IBankAccount | undefined> {
     const foundBankAccount = this.bankAccounts.find(
       bankAccount => bankAccount.id === id,

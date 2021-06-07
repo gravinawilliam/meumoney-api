@@ -60,7 +60,7 @@ export default class Transaction implements ITransaction {
     type: 'uuid',
     nullable: true,
   })
-  toBankAccountId: string;
+  toBankAccountId?: string | null;
 
   @CreateDateColumn()
   @Exclude()
