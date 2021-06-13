@@ -4,6 +4,7 @@ import TransactionsController from '../controllers/TransactionsController';
 import UserTransactionsByDateController from '../controllers/UserTransactionsByDateController';
 import listTransactionsByDateUserIdValidator from '../validators/ListTransactionsByDateUserId';
 import createTransactionValidator from '../validators/CreateTransaction';
+import updateTransactionValidator from '../validators/UpdateTransactionValidator';
 
 const transactionsRouter = Router();
 const transactionsController = new TransactionsController();
@@ -24,5 +25,11 @@ transactionsRouter.get(
 );
 
 transactionsRouter.delete('/:transactionId', transactionsController.delete);
+
+transactionsRouter.put(
+  '/:transactionId',
+  updateTransactionValidator,
+  transactionsController.update,
+);
 
 export default transactionsRouter;
