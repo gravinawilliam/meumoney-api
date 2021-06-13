@@ -15,5 +15,6 @@ export default interface ITransactionsRepository {
     userId,
   }: IDeleteTransactionDTO): Promise<ITransaction | undefined>;
   findByUserId(userId: string): Promise<ITransaction[]>;
+  findById(transactionId: string): Promise<ITransaction | undefined>;
   save(transaction: ITransaction): Promise<void>;
 }
