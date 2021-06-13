@@ -38,6 +38,13 @@ export default class TransactionsRepository implements ITransactionsRepository {
     return transactions;
   }
 
+  public async findById(
+    transactionId: string,
+  ): Promise<ITransaction | undefined> {
+    const foundTransaction = await this.ormRepository.findOne(transactionId);
+    return foundTransaction;
+  }
+
   public async findByTransactionIdUserId({
     transactionId,
     userId,
