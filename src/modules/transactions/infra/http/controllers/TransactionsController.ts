@@ -1,4 +1,5 @@
 import DeleteTransactionService from '@modules/transactions/services/DeleteTransactionService';
+import UpdateTransactionService from '@modules/transactions/services/UpdateTransactionService';
 import { OK } from '@shared/constants/HttpStatusCode';
 import { classToClass } from 'class-transformer';
 import { Request, Response } from 'express';
@@ -31,6 +32,35 @@ export default class TransactionsController {
       toBankAccountId,
     });
     return res.json(classToClass(transaction));
+  }
+
+  public async update(req: Request, res: Response): Promise<Response> {
+    const {
+      note,
+      title,
+      transactionType,
+      value,
+      fromBankAccountId,
+      symbolCoin,
+      toBankAccountId,
+      date,
+    } = req.body;
+    const userId = req.user.id;
+    const { transactionId } = req.params;
+    const updateTransaction = container.resolve(UpdateTransactionService);
+    const httpResponse = await updateTransaction.execute({
+      note,
+      date,
+      title,
+      transactionType,
+      value,
+      userId,
+      fromBankAccountId,
+      symbolCoin,
+      toBankAccountId,
+      transactionId,
+    });
+    return res.json(classToClass(httpResponse));
   }
 
   public async delete(req: Request, res: Response): Promise<Response> {

@@ -45,6 +45,15 @@ export default class FakeTransactionsRepository
     return foundTransactions;
   }
 
+  public async findById(
+    transactionId: string,
+  ): Promise<ITransaction | undefined> {
+    const foundTransaction = this.transactions.find(
+      transaction => transaction.id === transactionId,
+    );
+    return foundTransaction;
+  }
+
   public async findByTransactionIdUserId({
     transactionId,
     userId,

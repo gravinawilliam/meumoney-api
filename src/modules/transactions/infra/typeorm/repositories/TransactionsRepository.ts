@@ -1,8 +1,9 @@
-import { getRepository, Repository } from 'typeorm';
+import { getRepository, Raw, Repository } from 'typeorm';
 import ITransactionsRepository from '@modules/transactions/interfaces/repositories/ITransactionsRepository';
 import ITransaction from '@modules/transactions/interfaces/models/ITransaction';
 import IListTransactionByDateUserIdDTO from '@modules/transactions/interfaces/dtos/IListTransactionByDateUserIdDTO';
 import IDeleteTransactionDTO from '@modules/transactions/interfaces/dtos/IDeleteTransactionDTO';
+import IListTransactionByDateBankAccountIdDTO from '@modules/transactions/interfaces/dtos/IListTransactionByDateBankAccountIdDTO';
 import Transaction from '../entities/Transaction';
 import ICreateTransactionDTO from '../../../interfaces/dtos/ICreateTransactionDTO';
 
@@ -38,6 +39,13 @@ export default class TransactionsRepository implements ITransactionsRepository {
     return transactions;
   }
 
+  public async findById(
+    transactionId: string,
+  ): Promise<ITransaction | undefined> {
+    const foundTransaction = await this.ormRepository.findOne(transactionId);
+    return foundTransaction;
+  }
+
   public async findByTransactionIdUserId({
     transactionId,
     userId,
@@ -56,6 +64,37 @@ export default class TransactionsRepository implements ITransactionsRepository {
       where: {
         userId,
       },
+    });
+    return foundTransactions;
+  }
+
+  public async findByDateBankAccountId({
+    month,
+    year,
+    bankAccountId,
+    userId,
+  }: IListTransactionByDateBankAccountIdDTO): Promise<ITransaction[]> {
+    const parsedMonth = String(month).padStart(2, '0');
+
+    const foundTransactions = await this.ormRepository.find({
+      where: [
+        {
+          fromBankAccountId: bankAccountId,
+          date: Raw(
+            dateFieldName =>
+              `to_char(${dateFieldName}, 'MM-YYYY') = '${parsedMonth}-${year}'`,
+          ),
+          userId,
+        },
+        {
+          toBankAccountId: bankAccountId,
+          date: Raw(
+            dateFieldName =>
+              `to_char(${dateFieldName}, 'MM-YYYY') = '${parsedMonth}-${year}'`,
+          ),
+          userId,
+        },
+      ],
     });
     return foundTransactions;
   }

@@ -4,10 +4,14 @@ import TransactionsController from '../controllers/TransactionsController';
 import UserTransactionsByDateController from '../controllers/UserTransactionsByDateController';
 import listTransactionsByDateUserIdValidator from '../validators/ListTransactionsByDateUserId';
 import createTransactionValidator from '../validators/CreateTransaction';
+import updateTransactionValidator from '../validators/UpdateTransactionValidator';
+import GetValueGainsExpensesByDateBankAccountIdController from '../controllers/GetValueGainsExpensesByDateBankAccountIdController';
 
 const transactionsRouter = Router();
 const transactionsController = new TransactionsController();
 const userTransactionsByDateController = new UserTransactionsByDateController();
+const getValueGainsExpensesByDateBankAccountId =
+  new GetValueGainsExpensesByDateBankAccountIdController();
 
 transactionsRouter.use(ensureAuthenticated);
 
@@ -23,6 +27,17 @@ transactionsRouter.get(
   userTransactionsByDateController.index,
 );
 
+transactionsRouter.get(
+  '/getValueGainExpense',
+  getValueGainsExpensesByDateBankAccountId.show,
+);
+
 transactionsRouter.delete('/:transactionId', transactionsController.delete);
+
+transactionsRouter.put(
+  '/:transactionId',
+  updateTransactionValidator,
+  transactionsController.update,
+);
 
 export default transactionsRouter;
