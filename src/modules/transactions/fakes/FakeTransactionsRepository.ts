@@ -3,6 +3,7 @@ import { v4 } from 'uuid';
 import Transaction from '../infra/typeorm/entities/Transaction';
 import ICreateTransactionDTO from '../interfaces/dtos/ICreateTransactionDTO';
 import IDeleteTransactionDTO from '../interfaces/dtos/IDeleteTransactionDTO';
+import IListTransactionByDateBankAccountIdDTO from '../interfaces/dtos/IListTransactionByDateBankAccountIdDTO';
 import IListTransactionByDateUserIdDTO from '../interfaces/dtos/IListTransactionByDateUserIdDTO';
 import ITransaction from '../interfaces/models/ITransaction';
 import ITransactionsRepository from '../interfaces/repositories/ITransactionsRepository';
@@ -27,6 +28,19 @@ export default class FakeTransactionsRepository
     const deletedTransaction = this.transactions[findIndex];
     this.transactions.splice(findIndex, 1);
     return deletedTransaction;
+  }
+
+  public async findByDateBankAccountId({
+    userId,
+    bankAccountId,
+  }: IListTransactionByDateBankAccountIdDTO): Promise<ITransaction[]> {
+    const foundTransactions = this.transactions.filter(transaction => {
+      return (
+        transaction.userId === userId &&
+        transaction.fromBankAccountId === bankAccountId
+      );
+    });
+    return foundTransactions;
   }
 
   public async findByDateUserId({
