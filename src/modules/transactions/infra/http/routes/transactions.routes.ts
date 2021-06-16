@@ -32,6 +32,11 @@ transactionsRouter.get(
   getValueGainsExpensesByDateBankAccountId.show,
 );
 
+transactionsRouter.get(
+  '/getTransactionsByMonthYear',
+  transactionsController.index,
+);
+
 transactionsRouter.delete('/:transactionId', transactionsController.delete);
 
 transactionsRouter.put(
