@@ -37,6 +37,11 @@ transactionsRouter.get(
   transactionsController.index,
 );
 
+transactionsRouter.get(
+  '/listByBankAccount/:bankAccountId',
+  transactionsController.listByBankAccount,
+);
+
 transactionsRouter.delete('/:transactionId', transactionsController.delete);
 
 transactionsRouter.put(
