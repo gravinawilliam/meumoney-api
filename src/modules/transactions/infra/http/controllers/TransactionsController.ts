@@ -1,4 +1,5 @@
 import DeleteTransactionService from '@modules/transactions/services/DeleteTransactionService';
+import ListTransactionsByBankAccountIdService from '@modules/transactions/services/ListTransactionsByBankAccountIdService';
 import ListTransactionsByMonthYearBankAccountIdService from '@modules/transactions/services/ListTransactionsByMonthYearBankAccountIdService';
 import UpdateTransactionService from '@modules/transactions/services/UpdateTransactionService';
 import { OK } from '@shared/constants/HttpStatusCode';
@@ -85,6 +86,20 @@ export default class TransactionsController {
       bankAccountId: String(bankAccountId),
       year: String(year),
       month: String(month),
+      userId,
+    });
+    return res.status(OK).json(classToClass(transactions));
+  }
+
+  public async listByBankAccount(
+    req: Request,
+    res: Response,
+  ): Promise<Response> {
+    const userId = req.user.id;
+    const { bankAccountId } = req.params;
+    const service = container.resolve(ListTransactionsByBankAccountIdService);
+    const transactions = await service.execute({
+      bankAccountId: String(bankAccountId),
       userId,
     });
     return res.status(OK).json(classToClass(transactions));
