@@ -5,6 +5,7 @@ import ICreateTransactionDTO from '../interfaces/dtos/ICreateTransactionDTO';
 import IDeleteTransactionDTO from '../interfaces/dtos/IDeleteTransactionDTO';
 import IListTransactionByDateBankAccountIdDTO from '../interfaces/dtos/IListTransactionByDateBankAccountIdDTO';
 import IListTransactionByDateUserIdDTO from '../interfaces/dtos/IListTransactionByDateUserIdDTO';
+import IListTransactionsByBankAccountIdDTO from '../interfaces/dtos/IListTransactionsByBankAccountIdDTO';
 import ITransaction from '../interfaces/models/ITransaction';
 import ITransactionsRepository from '../interfaces/repositories/ITransactionsRepository';
 
@@ -21,6 +22,19 @@ export default class FakeTransactionsRepository
       ...transaction,
     });
     return transactionCreated;
+  }
+
+  public async findByBankAccount({
+    bankAccountId,
+    userId,
+  }: IListTransactionsByBankAccountIdDTO): Promise<ITransaction[]> {
+    const foundTransactions = this.transactions.filter(transaction => {
+      return (
+        transaction.userId === userId &&
+        transaction.fromBankAccountId === bankAccountId
+      );
+    });
+    return foundTransactions;
   }
 
   public async delete(transaction: ITransaction): Promise<ITransaction> {
