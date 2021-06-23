@@ -4,6 +4,7 @@ import ITransaction from '@modules/transactions/interfaces/models/ITransaction';
 import IListTransactionByDateUserIdDTO from '@modules/transactions/interfaces/dtos/IListTransactionByDateUserIdDTO';
 import IDeleteTransactionDTO from '@modules/transactions/interfaces/dtos/IDeleteTransactionDTO';
 import IListTransactionByDateBankAccountIdDTO from '@modules/transactions/interfaces/dtos/IListTransactionByDateBankAccountIdDTO';
+import IListTransactionsByBankAccountIdDTO from '@modules/transactions/interfaces/dtos/IListTransactionsByBankAccountIdDTO';
 import Transaction from '../entities/Transaction';
 import ICreateTransactionDTO from '../../../interfaces/dtos/ICreateTransactionDTO';
 
@@ -24,6 +25,19 @@ export default class TransactionsRepository implements ITransactionsRepository {
   public async delete(transaction: ITransaction): Promise<ITransaction> {
     const deletedTransaction = await this.ormRepository.remove(transaction);
     return deletedTransaction;
+  }
+
+  public async findByBankAccount({
+    bankAccountId,
+    userId,
+  }: IListTransactionsByBankAccountIdDTO): Promise<ITransaction[]> {
+    const transactions = await this.ormRepository.find({
+      where: {
+        fromBankAccountId: bankAccountId,
+        userId,
+      },
+    });
+    return transactions;
   }
 
   public async findByDateUserId({
