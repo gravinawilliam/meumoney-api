@@ -46,13 +46,9 @@ export default class FakeTransactionsRepository
 
   public async findByDateBankAccountId({
     userId,
-    bankAccountId,
   }: IListTransactionByDateBankAccountIdDTO): Promise<ITransaction[]> {
     const foundTransactions = this.transactions.filter(transaction => {
-      return (
-        transaction.userId === userId &&
-        transaction.fromBankAccountId === bankAccountId
-      );
+      return transaction.userId === userId;
     });
     return foundTransactions;
   }

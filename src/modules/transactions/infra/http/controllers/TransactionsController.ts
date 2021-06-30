@@ -78,12 +78,11 @@ export default class TransactionsController {
 
   public async index(req: Request, res: Response): Promise<Response> {
     const userId = req.user.id;
-    const { bankAccountId, month, year } = req.query;
+    const { month, year } = req.query;
     const service = container.resolve(
       ListTransactionsByMonthYearBankAccountIdService,
     );
     const transactions = await service.execute({
-      bankAccountId: String(bankAccountId),
       year: String(year),
       month: String(month),
       userId,

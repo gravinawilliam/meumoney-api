@@ -17,7 +17,6 @@ export default class ListTransactionsByMonthYearBankAccountIdService {
 
   public async execute({
     userId,
-    bankAccountId,
     month,
     year,
   }: IListTransactionsByMonthYearBankAccountIdDTO): Promise<ITransaction[]> {
@@ -27,7 +26,6 @@ export default class ListTransactionsByMonthYearBankAccountIdService {
     }
     const transactions =
       await this.transactionsRepository.findByDateBankAccountId({
-        bankAccountId,
         userId,
         month,
         year,

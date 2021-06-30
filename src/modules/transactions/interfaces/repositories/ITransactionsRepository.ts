@@ -20,7 +20,6 @@ export default interface ITransactionsRepository {
     month,
     userId,
     year,
-    bankAccountId,
   }: IListTransactionByDateBankAccountIdDTO): Promise<ITransaction[]>;
   findByTransactionIdUserId({
     transactionId,

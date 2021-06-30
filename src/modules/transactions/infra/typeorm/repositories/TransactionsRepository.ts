@@ -85,23 +85,12 @@ export default class TransactionsRepository implements ITransactionsRepository {
   public async findByDateBankAccountId({
     month,
     year,
-    bankAccountId,
     userId,
   }: IListTransactionByDateBankAccountIdDTO): Promise<ITransaction[]> {
     const parsedMonth = String(month).padStart(2, '0');
-
     const foundTransactions = await this.ormRepository.find({
       where: [
         {
-          fromBankAccountId: bankAccountId,
-          date: Raw(
-            dateFieldName =>
-              `to_char(${dateFieldName}, 'MM-YYYY') = '${parsedMonth}-${year}'`,
-          ),
-          userId,
-        },
-        {
-          toBankAccountId: bankAccountId,
           date: Raw(
             dateFieldName =>
               `to_char(${dateFieldName}, 'MM-YYYY') = '${parsedMonth}-${year}'`,
